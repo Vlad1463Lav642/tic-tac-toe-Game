@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowLabel: {fileID: 8152061784133278144}
+  audio: {fileID: 24100000, guid: 71c09443bef204fb38aa71c64ed96fe9, type: 2}
 --- !u!1 &8152061782973912745
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +722,7 @@ GameObject:
   - component: {fileID: 8152061784452029228}
   - component: {fileID: 8152061784452029231}
   m_Layer: 5
-  m_Name: MusicSlider
+  m_Name: VolumeSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -792,13 +793,24 @@ MonoBehaviour:
   m_FillRect: {fileID: 8152061783795950576}
   m_HandleRect: {fileID: 8152061783321110814}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8152061782857126106}
+        m_MethodName: SetVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8152061784551787418
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,7 +823,7 @@ GameObject:
   - component: {fileID: 8152061784551787399}
   - component: {fileID: 8152061784551787396}
   m_Layer: 5
-  m_Name: Music
+  m_Name: Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,7 +889,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041C\u0443\u0437\u044B\u043A\u0430:"
+  m_Text: "\u0417\u0432\u0443\u043A:"
 --- !u!1 &8152061784599676620
 GameObject:
   m_ObjectHideFlags: 0
