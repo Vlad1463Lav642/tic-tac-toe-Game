@@ -13,7 +13,7 @@ public class MainMenuController : MonoBehaviour
 
     public void Settings()
     {
-
+        Instantiate(windowPanels[1], transform);
     }
 
     private void Update()
