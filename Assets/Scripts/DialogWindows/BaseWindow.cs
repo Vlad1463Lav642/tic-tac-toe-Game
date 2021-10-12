@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class BaseDialogWindow : MonoBehaviour
+public abstract class BaseWindow : MonoBehaviour
 {
     [SerializeField] private Text windowLabel;
 
@@ -17,7 +17,7 @@ public abstract class BaseDialogWindow : MonoBehaviour
         }
     }
 
-    public BaseDialogWindow(int type)
+    public BaseWindow(int type)
     {
         windowType = type;
     }
