@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class BaseWindow : MonoBehaviour
@@ -9,7 +7,7 @@ public abstract class BaseWindow : MonoBehaviour
 
     public virtual void CloseButton()
     {
-        Destroy(gameObject);
+        Destroy(gameObject,0.2f);
     }
 
     public abstract void ConfirmButton();

@@ -6,6 +6,6 @@ public class ConfirmDialogWindow : BaseWindow
 {
     public override void ConfirmButton()
     {
-        Destroy(gameObject);
+        Destroy(gameObject, 0.2f);
     }
 }

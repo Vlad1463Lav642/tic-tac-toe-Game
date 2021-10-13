@@ -1,15 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MainMenuController : MonoBehaviour
 {
+    [Header("Список с диалоговыми окнами")]
     [SerializeField] private List<GameObject> windowPanels;
+    [SerializeField] private new AudioMixer audio;
 
-    public void PlayGame()
+    private void Start()
     {
-
+        audio.SetFloat("SoundVolume", PlayerPrefs.GetFloat("SoundVolume"));
+        Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
     }
+
 
     public void Settings()
     {
