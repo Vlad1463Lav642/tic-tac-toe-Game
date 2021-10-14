@@ -10,5 +10,10 @@ public abstract class BaseWindow : MonoBehaviour
         Destroy(gameObject,0.2f);
     }
 
+    public virtual void SetLabelText(string text)
+    {
+        windowLabel.text = text;
+    }
+
     public abstract void ConfirmButton();
 }

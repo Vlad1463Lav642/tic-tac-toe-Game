@@ -7,11 +7,17 @@ public class MainMenuController : MonoBehaviour
     [Header("Список с диалоговыми окнами")]
     [SerializeField] private List<GameObject> windowPanels;
     [SerializeField] private new AudioMixer audio;
+    [SerializeField] private GameObject loginPanel;
 
     private void Start()
     {
         audio.SetFloat("SoundVolume", PlayerPrefs.GetFloat("SoundVolume"));
         Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
+    }
+
+    public void Authorization()
+    {
+        loginPanel.SetActive(true);
     }
 
 

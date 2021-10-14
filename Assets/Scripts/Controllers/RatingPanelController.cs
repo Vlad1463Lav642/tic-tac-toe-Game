@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
-public class RecordPanelController : MonoBehaviour
+public class RatingPanelController : MonoBehaviour
 {
     [SerializeField] private float speedPanel = 2f;
     [SerializeField] private Transform arrowImage;
+    [SerializeField] private LoginWindow loginPanel;
+    private string[] playerLogins;
 
     private bool isOpen;
     private Vector3 panelPosition;
@@ -15,6 +17,21 @@ public class RecordPanelController : MonoBehaviour
         panelPosition = transform.position;
         closePosition = transform.position.x;
         openPosition = closePosition - 304f;
+
+        RatingDataLoad();
+    }
+
+    public void RatingDataLoad()
+    {
+        playerLogins = loginPanel.GetPlayerLogins();
+        string[] ratingData = new string[playerLogins.Length];
+
+        for (int i = 0; i < ratingData.Length; i++)
+        {
+            ratingData[i] = $"{playerLogins[i]}: {PlayerPrefs.GetFloat(playerLogins[i])}";
+        }
+
+        gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingData);
     }
 
     private void Update()
