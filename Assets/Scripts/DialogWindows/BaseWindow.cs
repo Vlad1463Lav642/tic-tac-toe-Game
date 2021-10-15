@@ -7,7 +7,8 @@ public abstract class BaseWindow : MonoBehaviour
 
     public virtual void CloseButton()
     {
-        Destroy(gameObject,0.2f);
+        //Destroy(gameObject,0.2f);
+        gameObject.SetActive(false);
     }
 
     public virtual void SetLabelText(string text)
