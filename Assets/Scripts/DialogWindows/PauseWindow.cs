@@ -11,13 +11,11 @@ public class PauseWindow : BaseWindow
 
     public override void CloseButton()
     {
-        Time.timeScale = 1f;
         gameObject.SetActive(false);
     }
 
     public void OptionsButton()
     {
-        Time.timeScale = 1f;
         optionsPanel.SetActive(true);
     }
 }

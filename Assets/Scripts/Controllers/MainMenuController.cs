@@ -8,6 +8,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private List<GameObject> windowPanels;
     [SerializeField] private new AudioMixer audio;
     [SerializeField] private GameObject loginPanel;
+    [SerializeField] private GameObject exitPanel;
+    [SerializeField] private GameObject optionsPanel;
 
     private void Start()
     {
@@ -23,14 +25,14 @@ public class MainMenuController : MonoBehaviour
 
     public void Settings()
     {
-        Instantiate(windowPanels[1], transform);
+        optionsPanel.SetActive(true);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Instantiate(windowPanels[0],transform);
+            exitPanel.SetActive(true);
         }
     }
 }
