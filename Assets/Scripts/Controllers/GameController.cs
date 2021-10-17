@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -14,6 +15,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private Text[] playerNames;
     [SerializeField] private Text[] playerScores;
 
+    [SerializeField] private int rounds = 3;
+    private int roundsCount = 0;
+    private int[] playerScoreCounts;
+
     [SerializeField] private WinWindow winPanel;
 
 
@@ -23,12 +28,14 @@ public class GameController : MonoBehaviour
     {
         playerTurn = 0;
         turnCount = 0;
-        turnIcons[0].SetActive(true);
-        turnIcons[1].SetActive(false);
         markedSpaces = new int[tictactoeSpaces.Length];
+        playerScoreCounts = new int[playerScores.Length];
+
 
         for (int i = 0; i < tictactoeSpaces.Length; i++)
         {
+            tictactoeSpaces[i].GetComponent<Image>().sprite = null;
+            tictactoeSpaces[i].GetComponent<Image>().color = new Color(0, 0, 0, 0);
             tictactoeSpaces[i].GetComponentInParent<Button>().interactable = true;
         }
 
@@ -37,9 +44,32 @@ public class GameController : MonoBehaviour
             markedSpaces[j] = -1;
         }
 
-        for(int k = 0; k < playerNames.Length; k++)
+        for(int k = 0; k < playerScoreCounts.Length; k++)
         {
-            playerNames[k].text = "Test";
+            playerScoreCounts[k] = Convert.ToInt32(playerScores[k].text);
+        }
+
+        if(UnityEngine.Random.Range(0f,10f) <= 5f)
+        {
+            playerNames[0].text = PlayerPrefs.GetString("CurrentPlayerName");
+            playerNames[1].text = "AI";
+        }
+        else
+        {
+            playerNames[0].text = "AI";
+            playerNames[1].text = PlayerPrefs.GetString("CurrentPlayerName");
+        }
+
+
+        if(UnityEngine.Random.Range(0f,10f) <= 5f)
+        {
+            turnIcons[0].SetActive(true);
+            turnIcons[1].SetActive(false);
+        }
+        else
+        {
+            turnIcons[0].SetActive(false);
+            turnIcons[1].SetActive(true);
         }
     }
 
@@ -98,7 +128,7 @@ public class GameController : MonoBehaviour
         {
             if(solutions[i] == 3 * (playerTurn + 1))
             {
-                WinnerWindow(i);
+                WinnerWindow(playerTurn);
                 return;
             }
         }
@@ -106,7 +136,29 @@ public class GameController : MonoBehaviour
 
     private void WinnerWindow(int playerID)
     {
-        winPanel.gameObject.SetActive(true);
-        winPanel.SetLabelText(playerNames[playerID].text);
+        if (roundsCount < rounds)
+        {
+            roundsCount++;
+            float scoreCount = ++playerScoreCounts[playerID];
+
+            playerScores[playerTurn].text = scoreCount.ToString();
+            InitializeGame();
+        }
+        else
+        {
+            float winPlayer = PlayerPrefs.GetFloat(playerNames[playerID].text);
+
+            Debug.Log(playerNames[0].text);
+            Debug.Log(PlayerPrefs.HasKey(playerNames[playerID].text));
+
+            if (PlayerPrefs.HasKey(playerNames[playerID].text))
+            {
+                PlayerPrefs.SetFloat(playerNames[playerID].text, ++winPlayer);
+                Debug.Log(winPlayer);
+            }
+
+            winPanel.gameObject.SetActive(true);
+            winPanel.SetLabelText(playerNames[playerID].text);
+        }
     }
 }

@@ -23,7 +23,6 @@ public class OptionsWindow : BaseWindow
 
     public override void ConfirmButton()
     {
-        //Destroy(gameObject, 0.2f);
         gameObject.SetActive(false);
     }
 }

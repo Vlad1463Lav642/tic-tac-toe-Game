@@ -14,7 +14,11 @@ public class MainMenuController : MonoBehaviour
     private void Start()
     {
         audio.SetFloat("SoundVolume", PlayerPrefs.GetFloat("SoundVolume"));
-        Debug.Log(PlayerPrefs.GetFloat("SoundVolume"));
+
+        if (!PlayerPrefs.HasKey("CurrentPlayerName"))
+        {
+            PlayerPrefs.SetString("CurrentPlayerName", "Guest");
+        }
     }
 
     public void Authorization()

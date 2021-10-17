@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LoginWindow : BaseWindow
 {
     [SerializeField] private GameObject registrationPanel;
     private string[] playerLogins;
+    private UnityAction onPlayerSelected;
 
     private void Start()
     {
@@ -13,7 +18,9 @@ public class LoginWindow : BaseWindow
     public void LoginDataLoad()
     {
         playerLogins = GetPlayerLogins();
-        gameObject.GetComponent<ScrollViewAdapter>().AddItems(playerLogins, playerLogins);
+        gameObject.GetComponent<ScrollViewAdapter>().AddItems(playerLogins);
+        onPlayerSelected = LoginPlayer;
+        ButtonsInit(playerLogins);
     }
 
     public string[] GetPlayerLogins()
@@ -29,6 +36,17 @@ public class LoginWindow : BaseWindow
         return playerLogins;
     }
 
+    private void ButtonsInit(string[] userNames)
+    {
+        List<GameObject> itemsList = gameObject.GetComponent<ScrollViewAdapter>().GetItems();
+
+        foreach(var item in itemsList)
+        {
+            item.GetComponent<Button>().onClick.AddListener(onPlayerSelected);
+        }
+
+    }
+
     public string[] GetPlayerKeys()
     {
         int playerKeysCount = PlayerPrefs.GetInt("PlayersCount");
@@ -42,9 +60,9 @@ public class LoginWindow : BaseWindow
         return playerKeys;
     }
 
-    public string LoginPlayer()
+    private void LoginPlayer()
     {
-        return null;
+        PlayerPrefs.SetString("CurrentPlayerName", EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text);
     }
 
     public override void ConfirmButton()

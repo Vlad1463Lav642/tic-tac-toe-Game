@@ -27,18 +27,9 @@ public class ScrollViewAdapter : MonoBehaviour
         }
     }
 
-    public void AddItems(string[] userNames, string[] itemNames)
+    public List<GameObject> GetItems()
     {
-        ClearItems();
-
-        for (int i = 0; i < userNames.Length; i++)
-        {
-            GameObject item = Instantiate(scrollItem);
-            item.transform.SetParent(scrollContent, false);
-            item.GetComponentInChildren<Text>().text = userNames[i].ToString();
-            item.name = itemNames[i];
-            itemsList.Add(item);
-        }
+        return itemsList;
     }
 
     private void ClearItems()

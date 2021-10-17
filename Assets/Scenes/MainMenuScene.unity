@@ -2409,7 +2409,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: f4c99a340a6e6504aa6e992b7a253612, type: 3}
-    m_FontSize: 50
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2420,7 +2420,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0420\u0435\u0439\u0442\u0438\u043D\u0433\n"
+  m_Text: "\u0420\u0435\u0439\u0442\u0438\u043D\u0433 \u043F\u043E\u0431\u0435\u0434\n"
 --- !u!222 &2039574041
 CanvasRenderer:
   m_ObjectHideFlags: 0
