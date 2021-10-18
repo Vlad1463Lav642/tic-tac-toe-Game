@@ -1,26 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MainMenuController : MonoBehaviour
 {
+    #region Параметры
+    [Header("Список с диалоговыми окнами")]
     [SerializeField] private List<GameObject> windowPanels;
+    [SerializeField] private new AudioMixer audio;
+    [SerializeField] private GameObject loginPanel; //Окно авторизации.
+    [SerializeField] private GameObject exitPanel; //Диалоговое окно о выходе из игры.
+    [SerializeField] private GameObject optionsPanel; //Окно настроек.
+    #endregion
 
-    public void PlayGame()
+    private void Start()
     {
+        audio.SetFloat("SoundVolume", PlayerPrefs.GetFloat("SoundVolume"));
 
+        if (!PlayerPrefs.HasKey("CurrentPlayerName"))
+        {
+            PlayerPrefs.SetString("CurrentPlayerName", "Guest");
+        }
     }
+
+    public void Authorization()
+    {
+        loginPanel.SetActive(true);
+    }
+
 
     public void Settings()
     {
-
+        optionsPanel.SetActive(true);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Instantiate(windowPanels[0],transform);
+            exitPanel.SetActive(true);
         }
     }
 }

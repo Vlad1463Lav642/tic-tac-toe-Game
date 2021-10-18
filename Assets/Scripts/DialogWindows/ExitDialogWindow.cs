@@ -1,17 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Диалоговое окно потверждения выхода.
+/// </summary>
 public class ExitDialogWindow : BaseWindow
 {
-    public ExitDialogWindow(int type) : base(type)
-    {
-
-    }
-
     public override void ConfirmButton()
     {
+        gameObject.SetActive(false);
         Application.Quit();
-        Destroy(gameObject);
     }
 }
