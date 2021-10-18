@@ -3,8 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Скрипт осуществляющий управление экраном загрузки.
+/// </summary>
 public class LoadingScreen : MonoBehaviour
 {
+    #region Параметры
     [Header("Экран загрузки")]
     [SerializeField] private GameObject loadingScreen;
 
@@ -14,8 +18,7 @@ public class LoadingScreen : MonoBehaviour
     [SerializeField] private Text loadingText;
 
     private float waiting = 0.5f;
-
-    private bool isStarted;
+    #endregion
 
     public void LoadScene(int index)
     {
@@ -23,6 +26,11 @@ public class LoadingScreen : MonoBehaviour
         //StartCoroutine(AsyncLoad(index));
     }
 
+    /// <summary>
+    /// Симуляция загрузки.
+    /// </summary>
+    /// <param name="index">ID сцены.</param>
+    /// <returns></returns>
     IEnumerator AsyncLoadSimulation(int index)
     {
         loadingScreen.SetActive(true);
@@ -39,6 +47,11 @@ public class LoadingScreen : MonoBehaviour
         yield return null;
     }
 
+    /// <summary>
+    /// Обычная загрузка.
+    /// </summary>
+    /// <param name="index">ID сцены.</param>
+    /// <returns></returns>
     IEnumerator AsyncLoad(int index)
     {
         loadingScreen.SetActive(true);
@@ -53,21 +66,37 @@ public class LoadingScreen : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Устанавливает текст на экране загрузки.
+    /// </summary>
+    /// <param name="text">Текст загрузки.</param>
     public void SetLoadingText(string text)
     {
         loadingText.text = text;
     }
 
+    /// <summary>
+    /// Возвращает текст с экрана загрузки.
+    /// </summary>
+    /// <returns>Текст загрузки.</returns>
     public string GetLoadingText()
     {
         return loadingText.text;
     }
 
+    /// <summary>
+    /// Устанавливает значение полоски загрузки.
+    /// </summary>
+    /// <param name="value">Значение полоски</param>
     public void SetLoadingProgress(float value)
     {
         loadingSlider.value = value;
     }
 
+    /// <summary>
+    /// Возвращает значение полоски загрузки.
+    /// </summary>
+    /// <returns>Значение полоски.</returns>
     public float GetLoadingProgress()
     {
         return loadingSlider.value;

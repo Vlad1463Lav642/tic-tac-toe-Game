@@ -4,25 +4,37 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Окно авторизации.
+/// </summary>
 public class LoginWindow : BaseWindow
 {
+    #region Параметры
     [SerializeField] private GameObject registrationPanel;
     private string[] playerLogins;
     private UnityAction onPlayerSelected;
+    #endregion
 
     private void Start()
     {
         LoginDataLoad();
     }
 
+    /// <summary>
+    /// Передает данные в ScrollViewAdapter для вывода в списке.
+    /// </summary>
     public void LoginDataLoad()
     {
         playerLogins = GetPlayerLogins();
         gameObject.GetComponent<ScrollViewAdapter>().AddItems(playerLogins);
         onPlayerSelected = LoginPlayer;
-        ButtonsInit(playerLogins);
+        ButtonsInit();
     }
 
+    /// <summary>
+    /// Возвращает массив логинов игроков.
+    /// </summary>
+    /// <returns></returns>
     public string[] GetPlayerLogins()
     {
         int playerLoginsCount = PlayerPrefs.GetInt("PlayersCount");
@@ -36,7 +48,10 @@ public class LoginWindow : BaseWindow
         return playerLogins;
     }
 
-    private void ButtonsInit(string[] userNames)
+    /// <summary>
+    /// Инициализация кнопок игроков в списке.
+    /// </summary>
+    private void ButtonsInit()
     {
         List<GameObject> itemsList = gameObject.GetComponent<ScrollViewAdapter>().GetItems();
 
@@ -47,6 +62,10 @@ public class LoginWindow : BaseWindow
 
     }
 
+    /// <summary>
+    /// Возвращает массив ключей по которым можно получить логин из PlayerPrefs.
+    /// </summary>
+    /// <returns></returns>
     public string[] GetPlayerKeys()
     {
         int playerKeysCount = PlayerPrefs.GetInt("PlayersCount");
@@ -60,6 +79,9 @@ public class LoginWindow : BaseWindow
         return playerKeys;
     }
 
+    /// <summary>
+    /// Осуществляет перезапись значения текущего имени игрока в PlayerPrefs при нажатии на кнопку любого игрока в окне авторизации. 
+    /// </summary>
     private void LoginPlayer()
     {
         PlayerPrefs.SetString("CurrentPlayerName", EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text);

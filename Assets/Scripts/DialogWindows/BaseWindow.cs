@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Базовый абстрактный класс для всех окон.
+/// </summary>
 public abstract class BaseWindow : MonoBehaviour
 {
     [SerializeField] private Text windowLabel;

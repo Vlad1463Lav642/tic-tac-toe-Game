@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Окно регистрации.
+/// </summary>
 public class RegistrationWindow : BaseWindow
 {
+    #region Параметры
     private int i = 0;
     [SerializeField] private InputField userNameField;
     [SerializeField] private LoginWindow loginPanel;
     [SerializeField] private RatingPanelController ratingPanel;
+    #endregion
 
     public override void ConfirmButton()
     {
@@ -18,6 +23,10 @@ public class RegistrationWindow : BaseWindow
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Осуществляет регистрацию игрока.
+    /// </summary>
+    /// <param name="playerName">Имя игрока.</param>
     private void RegisterPlayer(string playerName)
     {
         if (!PlayerPrefs.HasKey(playerName))

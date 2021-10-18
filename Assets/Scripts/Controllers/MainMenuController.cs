@@ -4,12 +4,14 @@ using UnityEngine.Audio;
 
 public class MainMenuController : MonoBehaviour
 {
+    #region Параметры
     [Header("Список с диалоговыми окнами")]
     [SerializeField] private List<GameObject> windowPanels;
     [SerializeField] private new AudioMixer audio;
-    [SerializeField] private GameObject loginPanel;
-    [SerializeField] private GameObject exitPanel;
-    [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject loginPanel; //Окно авторизации.
+    [SerializeField] private GameObject exitPanel; //Диалоговое окно о выходе из игры.
+    [SerializeField] private GameObject optionsPanel; //Окно настроек.
+    #endregion
 
     private void Start()
     {

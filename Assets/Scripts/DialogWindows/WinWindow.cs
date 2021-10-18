@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Окно победы.
+/// </summary>
 public class WinWindow : BaseWindow
 {
-    [SerializeField] private Text scoreLabel;
+    [SerializeField] private GameObject confirmPanel;
 
-    public override void ConfirmButton() {}
-
-    public void SetLabelScore(string score)
+    public override void ConfirmButton()
     {
-        scoreLabel.text = score;
+        confirmPanel.SetActive(true);
     }
 }

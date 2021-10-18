@@ -2,6 +2,7 @@
 
 public class RatingPanelController : MonoBehaviour
 {
+    #region Параметры
     [SerializeField] private float speedPanel = 2f;
     [SerializeField] private Transform arrowImage;
     [SerializeField] private LoginWindow loginPanel;
@@ -11,31 +12,36 @@ public class RatingPanelController : MonoBehaviour
     private Vector3 panelPosition;
     private float closePosition;
     private float openPosition;
+    #endregion
 
     private void Start()
     {
-        panelPosition = transform.position;
-        closePosition = transform.position.x;
-        openPosition = closePosition - 304f;
+        panelPosition = transform.position; //Текущие координаты панели.
+        closePosition = transform.position.x; //Координаты по х закрытой панели.
+        openPosition = closePosition - 304f; //Координаты по х открытой панели.
 
         RatingDataLoad();
     }
 
+    /// <summary>
+    /// Передает данные в ScrollViewAdapter для вывода в списке.
+    /// </summary>
     public void RatingDataLoad()
     {
         playerLogins = loginPanel.GetPlayerLogins();
-        string[] ratingData = new string[playerLogins.Length];
+        string[] ratingScoreData = new string[playerLogins.Length];
 
-        for (int i = 0; i < ratingData.Length; i++)
+        for (int i = 0; i < ratingScoreData.Length; i++)
         {
-            ratingData[i] = $"{playerLogins[i]}: {PlayerPrefs.GetFloat(playerLogins[i])}";
+            ratingScoreData[i] = $"{playerLogins[i]}: {PlayerPrefs.GetFloat(playerLogins[i])}";
         }
 
-        gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingData);
+        gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingScoreData);
     }
 
     private void Update()
     {
+        //Сдвиг панели по координатам.
         if (!isOpen)
         {
             if (panelPosition.x <= closePosition)
@@ -53,6 +59,9 @@ public class RatingPanelController : MonoBehaviour
         transform.position = panelPosition;
     }
 
+    /// <summary>
+    /// Управляет поворотом стрелки на кнопке открытия рейтинга.
+    /// </summary>
     public void ControlPanel()
     {
         isOpen = !isOpen;
