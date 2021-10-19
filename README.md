@@ -1,6 +1,6 @@
 # tic-tac-toe-Game
 
-> This game is a classic arcade 2D top-down shooter in which the player must fight off endless waves of enemies and earn points.
+> This is an implementation of the classic game: Tic-Tac-Toe in the form of a computer game.
 
 ## Screenshots
 
