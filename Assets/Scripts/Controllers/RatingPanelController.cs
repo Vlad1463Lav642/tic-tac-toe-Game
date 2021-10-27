@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RatingPanelController : MonoBehaviour
 {
@@ -7,19 +8,19 @@ public class RatingPanelController : MonoBehaviour
     [SerializeField] private float speedPanel = 2f;
     [SerializeField] private Transform arrowImage;
     [SerializeField] private LoginWindow loginPanel;
-    private List<string> playerLogins;
 
     private bool isOpen;
     private Vector3 panelPosition;
-    private float closePosition;
-    private float openPosition;
+    private Vector3 closePosition;
+    private Vector3 openPosition;
     #endregion
 
     private void Start()
     {
         panelPosition = transform.position; //Текущие координаты панели.
-        closePosition = transform.position.x; //Координаты по х закрытой панели.
-        openPosition = closePosition - 304f; //Координаты по х открытой панели.
+        closePosition = transform.position; //Координаты по х закрытой панели.
+        openPosition = new Vector3(closePosition.x - 304f, closePosition.y, closePosition.z); //Координаты по х открытой панели.
+        isOpen = false;
 
         RatingDataLoad();
     }
@@ -29,13 +30,10 @@ public class RatingPanelController : MonoBehaviour
     /// </summary>
     public void RatingDataLoad()
     {
-        playerLogins = loginPanel.GetPlayerLogins();
+        List<string> playerLogins = loginPanel.GetPlayerLogins();
         List<string> ratingScoreData = new List<string>();
 
-        for (int i = 0; i < playerLogins.Count; i++)
-        {
-            ratingScoreData.Add($"{playerLogins[i]}: {PlayerPrefs.GetFloat(playerLogins[i])}");
-        }
+        ratingScoreData = playerLogins.Select(item => $"{item}: {PlayerPrefs.GetFloat(item)}").ToList();
 
         gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingScoreData);
     }
@@ -45,16 +43,16 @@ public class RatingPanelController : MonoBehaviour
         //Сдвиг панели по координатам.
         if (!isOpen)
         {
-            if (panelPosition.x <= closePosition)
+            if (panelPosition.x <= closePosition.x)
             {
-                panelPosition = new Vector3(panelPosition.x + speedPanel, panelPosition.y, panelPosition.z);
+                panelPosition = Vector3.Lerp(panelPosition, closePosition, Time.deltaTime * speedPanel);
             }
         }
         else
         {
-            if (panelPosition.x >= openPosition)
+            if (panelPosition.x >= openPosition.x)
             {
-                panelPosition = new Vector3(panelPosition.x - speedPanel, panelPosition.y, panelPosition.z);
+                panelPosition = Vector3.Lerp(panelPosition, openPosition, Time.deltaTime * speedPanel);
             }
         }
         transform.position = panelPosition;

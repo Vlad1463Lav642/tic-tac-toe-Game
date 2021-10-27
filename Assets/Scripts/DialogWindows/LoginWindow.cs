@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
 
 /// <summary>
 /// Окно авторизации.
@@ -54,10 +55,7 @@ public class LoginWindow : BaseWindow
     {
         List<GameObject> itemsList = gameObject.GetComponent<ScrollViewAdapter>().GetItems();
 
-        foreach(var item in itemsList)
-        {
-            item.GetComponent<Button>().onClick.AddListener(onPlayerSelected);
-        }
+        itemsList.Select(item => { item.GetComponent<Button>().onClick.AddListener(onPlayerSelected); return item; }).Count();
 
     }
 

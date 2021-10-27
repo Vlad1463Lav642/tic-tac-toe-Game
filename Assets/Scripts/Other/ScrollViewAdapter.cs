@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 /// <summary>
 /// Скрипт осуществляющий управление списком.
@@ -50,10 +51,8 @@ public class ScrollViewAdapter : MonoBehaviour
     /// </summary>
     private void ClearItems()
     {
-        for (int i = 0; i < itemsList.Count; i++)
-        {
-            Destroy(itemsList[i]);
-        }
+        itemsList.Select(item => { Destroy(item); return item;}).Count();
+
         itemsList.Clear();
     }
 }

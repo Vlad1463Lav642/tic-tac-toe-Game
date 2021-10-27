@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private WinWindow winPanel; //Окно победы.
 
 
-    private int[] markedSpaces; //Массив ID клеток поля.
+    private List<int> markedSpaces; //Массив ID клеток поля.
     #endregion
 
     /// <summary>
@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
     private void InitializeGame()
     {
         turnCount = 0;
-        markedSpaces = new int[tictactoeSpaces.Length];
+        markedSpaces = new List<int>();
         playerScoreCounts = new List<int>();
 
 
@@ -45,17 +45,16 @@ public class GameController : MonoBehaviour
             tictactoeSpaces[i].GetComponent<Image>().sprite = null;
             tictactoeSpaces[i].GetComponent<Image>().color = new Color(0, 0, 0, 0);
             tictactoeSpaces[i].GetComponentInParent<Button>().interactable = true;
-        }
 
-        for (int j = 0; j < markedSpaces.Length; j++)
-        {
-            markedSpaces[j] = emptyID;
+            markedSpaces.Add(emptyID);
         }
 
         for(int k = 0; k < playerScores.Length; k++)
         {
             playerScoreCounts.Add(Convert.ToInt32(playerScores[k].text));
         }
+
+        //playerScoreCounts = playerScores.Select(item => Convert.ToInt32(item)).ToList();
 
     }
 
@@ -152,7 +151,7 @@ public class GameController : MonoBehaviour
         int movePosition = emptyID;
         int score;
 
-        for(int i = 0; i < markedSpaces.Length; i++)
+        for(int i = 0; i < markedSpaces.Count; i++)
         {
             if(markedSpaces[i] == emptyID)
             {
@@ -207,7 +206,7 @@ public class GameController : MonoBehaviour
         {
             bestScore = -100;
 
-            for (int i = 0; i < markedSpaces.Length; i++)
+            for (int i = 0; i < markedSpaces.Count; i++)
             {
                 if (markedSpaces[i] == emptyID)
                 {
@@ -224,7 +223,7 @@ public class GameController : MonoBehaviour
         {
             bestScore = 100;
 
-            for (int i = 0; i < markedSpaces.Length; i++)
+            for (int i = 0; i < markedSpaces.Count; i++)
             {
                 if (markedSpaces[i] == emptyID)
                 {
@@ -340,7 +339,7 @@ public class GameController : MonoBehaviour
     {
         bool isDraw = false;
 
-        for(int i = 0; i<markedSpaces.Length; i++)
+        for(int i = 0; i<markedSpaces.Count; i++)
         {
             if(markedSpaces[i] == emptyID)
             {
