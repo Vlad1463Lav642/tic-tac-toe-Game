@@ -53,9 +53,6 @@ public class GameController : MonoBehaviour
         {
             playerScoreCounts.Add(Convert.ToInt32(playerScores[k].text));
         }
-
-        //playerScoreCounts = playerScores.Select(item => Convert.ToInt32(item)).ToList();
-
     }
 
     private void Start()
