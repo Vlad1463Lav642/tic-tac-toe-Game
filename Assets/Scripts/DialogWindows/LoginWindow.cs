@@ -11,7 +11,6 @@ public class LoginWindow : BaseWindow
 {
     #region Параметры
     [SerializeField] private GameObject registrationPanel;
-    private string[] playerLogins;
     private UnityAction onPlayerSelected;
     #endregion
 
@@ -25,7 +24,7 @@ public class LoginWindow : BaseWindow
     /// </summary>
     public void LoginDataLoad()
     {
-        playerLogins = GetPlayerLogins();
+        List<string> playerLogins = GetPlayerLogins();
         gameObject.GetComponent<ScrollViewAdapter>().AddItems(playerLogins);
         onPlayerSelected = LoginPlayer;
         ButtonsInit();
@@ -35,14 +34,14 @@ public class LoginWindow : BaseWindow
     /// Возвращает массив логинов игроков.
     /// </summary>
     /// <returns></returns>
-    public string[] GetPlayerLogins()
+    public List<string> GetPlayerLogins()
     {
         int playerLoginsCount = PlayerPrefs.GetInt("PlayersCount");
-        string[] playerLogins = new string[playerLoginsCount];
+        List<string> playerLogins = new List<string>();
 
         for(int i = 0;i < playerLoginsCount; i++)
         {
-            playerLogins[i] = PlayerPrefs.GetString($"Player {i}");
+            playerLogins.Add(PlayerPrefs.GetString($"Player {i}"));
         }
 
         return playerLogins;
@@ -66,14 +65,14 @@ public class LoginWindow : BaseWindow
     /// Возвращает массив ключей по которым можно получить логин из PlayerPrefs.
     /// </summary>
     /// <returns></returns>
-    public string[] GetPlayerKeys()
+    public List<string> GetPlayerKeys()
     {
         int playerKeysCount = PlayerPrefs.GetInt("PlayersCount");
-        string[] playerKeys = new string[playerKeysCount];
+        List<string> playerKeys = new List<string>();
 
         for(int i = 0; i < playerKeysCount; i++)
         {
-            playerKeys[i] = $"Player {i}";
+            playerKeys.Add($"Player {i}");
         }
 
         return playerKeys;

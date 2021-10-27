@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Text[] playerScores; //Количество выигранных каждым из игроков раундов.
 
     [SerializeField] private int rounds = 3; //Количество раундов.
-    private int[] playerScoreCounts; //Счетчик раундов.
+    private List<int> playerScoreCounts; //Счетчик раундов.
 
     private int emptyID = -1; //ID пустой клетки.
     private int cpuID; //ID компьютера.
@@ -36,7 +37,7 @@ public class GameController : MonoBehaviour
     {
         turnCount = 0;
         markedSpaces = new int[tictactoeSpaces.Length];
-        playerScoreCounts = new int[playerScores.Length];
+        playerScoreCounts = new List<int>();
 
 
         for (int i = 0; i < tictactoeSpaces.Length; i++)
@@ -51,9 +52,9 @@ public class GameController : MonoBehaviour
             markedSpaces[j] = emptyID;
         }
 
-        for(int k = 0; k < playerScoreCounts.Length; k++)
+        for(int k = 0; k < playerScores.Length; k++)
         {
-            playerScoreCounts[k] = Convert.ToInt32(playerScores[k].text);
+            playerScoreCounts.Add(Convert.ToInt32(playerScores[k].text));
         }
 
     }

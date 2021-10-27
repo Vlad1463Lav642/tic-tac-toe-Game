@@ -23,11 +23,11 @@ public class ScrollViewAdapter : MonoBehaviour
     /// Добавляет полученные значения в список.
     /// </summary>
     /// <param name="userNames">Массив значений.</param>
-    public void AddItems(string[] userNames)
+    public void AddItems(List<string> userNames)
     {
         ClearItems();
 
-        for(int i = 0; i < userNames.Length; i++)
+        for(int i = 0; i < userNames.Count; i++)
         {
             GameObject item = Instantiate(scrollItem);
             item.transform.SetParent(scrollContent, false);

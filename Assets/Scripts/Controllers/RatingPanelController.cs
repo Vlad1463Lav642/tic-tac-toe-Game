@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class RatingPanelController : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class RatingPanelController : MonoBehaviour
     [SerializeField] private float speedPanel = 2f;
     [SerializeField] private Transform arrowImage;
     [SerializeField] private LoginWindow loginPanel;
-    private string[] playerLogins;
+    private List<string> playerLogins;
 
     private bool isOpen;
     private Vector3 panelPosition;
@@ -29,11 +30,11 @@ public class RatingPanelController : MonoBehaviour
     public void RatingDataLoad()
     {
         playerLogins = loginPanel.GetPlayerLogins();
-        string[] ratingScoreData = new string[playerLogins.Length];
+        List<string> ratingScoreData = new List<string>();
 
-        for (int i = 0; i < ratingScoreData.Length; i++)
+        for (int i = 0; i < playerLogins.Count; i++)
         {
-            ratingScoreData[i] = $"{playerLogins[i]}: {PlayerPrefs.GetFloat(playerLogins[i])}";
+            ratingScoreData.Add($"{playerLogins[i]}: {PlayerPrefs.GetFloat(playerLogins[i])}");
         }
 
         gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingScoreData);
