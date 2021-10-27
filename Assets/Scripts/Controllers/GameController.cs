@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Text[] playerScores; //Количество выигранных каждым из игроков раундов.
 
     [SerializeField] private int rounds = 3; //Количество раундов.
-    private int[] playerScoreCounts; //Счетчик раундов.
+    private List<int> playerScoreCounts; //Счетчик раундов.
 
     private int emptyID = -1; //ID пустой клетки.
     private int cpuID; //ID компьютера.
@@ -26,7 +27,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private WinWindow winPanel; //Окно победы.
 
 
-    private int[] markedSpaces; //Массив ID клеток поля.
+    private List<int> markedSpaces; //Массив ID клеток поля.
     #endregion
 
     /// <summary>
@@ -35,8 +36,8 @@ public class GameController : MonoBehaviour
     private void InitializeGame()
     {
         turnCount = 0;
-        markedSpaces = new int[tictactoeSpaces.Length];
-        playerScoreCounts = new int[playerScores.Length];
+        markedSpaces = new List<int>();
+        playerScoreCounts = new List<int>();
 
 
         for (int i = 0; i < tictactoeSpaces.Length; i++)
@@ -44,18 +45,14 @@ public class GameController : MonoBehaviour
             tictactoeSpaces[i].GetComponent<Image>().sprite = null;
             tictactoeSpaces[i].GetComponent<Image>().color = new Color(0, 0, 0, 0);
             tictactoeSpaces[i].GetComponentInParent<Button>().interactable = true;
+
+            markedSpaces.Add(emptyID);
         }
 
-        for (int j = 0; j < markedSpaces.Length; j++)
+        for(int k = 0; k < playerScores.Length; k++)
         {
-            markedSpaces[j] = emptyID;
+            playerScoreCounts.Add(Convert.ToInt32(playerScores[k].text));
         }
-
-        for(int k = 0; k < playerScoreCounts.Length; k++)
-        {
-            playerScoreCounts[k] = Convert.ToInt32(playerScores[k].text);
-        }
-
     }
 
     private void Start()
@@ -151,7 +148,7 @@ public class GameController : MonoBehaviour
         int movePosition = emptyID;
         int score;
 
-        for(int i = 0; i < markedSpaces.Length; i++)
+        for(int i = 0; i < markedSpaces.Count; i++)
         {
             if(markedSpaces[i] == emptyID)
             {
@@ -206,7 +203,7 @@ public class GameController : MonoBehaviour
         {
             bestScore = -100;
 
-            for (int i = 0; i < markedSpaces.Length; i++)
+            for (int i = 0; i < markedSpaces.Count; i++)
             {
                 if (markedSpaces[i] == emptyID)
                 {
@@ -223,7 +220,7 @@ public class GameController : MonoBehaviour
         {
             bestScore = 100;
 
-            for (int i = 0; i < markedSpaces.Length; i++)
+            for (int i = 0; i < markedSpaces.Count; i++)
             {
                 if (markedSpaces[i] == emptyID)
                 {
@@ -339,7 +336,7 @@ public class GameController : MonoBehaviour
     {
         bool isDraw = false;
 
-        for(int i = 0; i<markedSpaces.Length; i++)
+        for(int i = 0; i<markedSpaces.Count; i++)
         {
             if(markedSpaces[i] == emptyID)
             {

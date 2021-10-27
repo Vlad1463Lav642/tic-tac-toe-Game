@@ -36,6 +36,7 @@ public class RegistrationWindow : BaseWindow
                 PlayerPrefs.SetString($"Player {i}", playerName);
                 PlayerPrefs.SetInt(playerName, 0);
                 PlayerPrefs.SetInt("PlayersCount", i + 1);
+                PlayerPrefs.SetString("CurrentPlayerName", playerName);
             }
             else
             {
