@@ -21,7 +21,7 @@ public class FaderBlackout : MonoBehaviour
 
     IEnumerator FaderDark(float speed, string score)
     {
-        Color color = fader.GetComponentInChildren<Image>().color;
+        var color = fader.GetComponentInChildren<Image>().color;
         faderText.gameObject.SetActive(true);
 
         for (float f = 0f; f < 1f; f += speed * Time.deltaTime)

@@ -30,8 +30,8 @@ public class RatingPanelController : MonoBehaviour
     /// </summary>
     public void RatingDataLoad()
     {
-        List<string> playerLogins = loginPanel.GetPlayerLogins();
-        List<string> ratingScoreData = new List<string>();
+        var playerLogins = loginPanel.GetPlayerLogins();
+        var ratingScoreData = new List<string>();
 
         ratingScoreData = playerLogins.Select(item => $"{item}: {PlayerPrefs.GetFloat(item)}").ToList();
 
@@ -44,17 +44,11 @@ public class RatingPanelController : MonoBehaviour
         if (!isOpen)
         {
             if (panelPosition.x <= closePosition.x)
-            {
                 panelPosition = Vector3.Lerp(panelPosition, closePosition, Time.deltaTime * speedPanel);
-            }
         }
-        else
-        {
-            if (panelPosition.x >= openPosition.x)
-            {
-                panelPosition = Vector3.Lerp(panelPosition, openPosition, Time.deltaTime * speedPanel);
-            }
-        }
+        else if (panelPosition.x >= openPosition.x)
+            panelPosition = Vector3.Lerp(panelPosition, openPosition, Time.deltaTime * speedPanel);
+
         transform.position = panelPosition;
     }
 
@@ -66,12 +60,8 @@ public class RatingPanelController : MonoBehaviour
         isOpen = !isOpen;
 
         if (isOpen)
-        {
             arrowImage.rotation = new Quaternion(arrowImage.rotation.x, arrowImage.rotation.y, 0f, arrowImage.rotation.w);
-        }
         else
-        {
             arrowImage.rotation = new Quaternion(arrowImage.rotation.x, arrowImage.rotation.y, -180f, arrowImage.rotation.w);
-        }
     }
 }

@@ -59,7 +59,7 @@ public class LoadingScreen : MonoBehaviour
 
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / .9f);
+            var progress = Mathf.Clamp01(operation.progress / .9f);
             loadingSlider.value = progress;
 
             yield return null;

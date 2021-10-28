@@ -25,7 +25,7 @@ public class LoginWindow : BaseWindow
     /// </summary>
     public void LoginDataLoad()
     {
-        List<string> playerLogins = GetPlayerLogins();
+        var playerLogins = GetPlayerLogins();
         gameObject.GetComponent<ScrollViewAdapter>().AddItems(playerLogins);
         onPlayerSelected = LoginPlayer;
         ButtonsInit();
@@ -37,8 +37,8 @@ public class LoginWindow : BaseWindow
     /// <returns></returns>
     public List<string> GetPlayerLogins()
     {
-        int playerLoginsCount = PlayerPrefs.GetInt("PlayersCount");
-        List<string> playerLogins = new List<string>();
+        var playerLoginsCount = PlayerPrefs.GetInt("PlayersCount");
+        var playerLogins = new List<string>();
 
         for(int i = 0;i < playerLoginsCount; i++)
         {
@@ -53,7 +53,7 @@ public class LoginWindow : BaseWindow
     /// </summary>
     private void ButtonsInit()
     {
-        List<GameObject> itemsList = gameObject.GetComponent<ScrollViewAdapter>().GetItems();
+        var itemsList = gameObject.GetComponent<ScrollViewAdapter>().GetItems();
 
         itemsList.Select(item => { item.GetComponent<Button>().onClick.AddListener(onPlayerSelected); return item; }).Count();
 
@@ -65,7 +65,7 @@ public class LoginWindow : BaseWindow
     /// <returns></returns>
     public List<string> GetPlayerKeys()
     {
-        int playerKeysCount = PlayerPrefs.GetInt("PlayersCount");
+        var playerKeysCount = PlayerPrefs.GetInt("PlayersCount");
         List<string> playerKeys = new List<string>();
 
         for(int i = 0; i < playerKeysCount; i++)
