@@ -8,9 +8,13 @@ public class MainMenuController : MonoBehaviour
     [Header("Список с диалоговыми окнами")]
     [SerializeField] private List<GameObject> windowPanels;
     [SerializeField] private new AudioMixer audio;
-    [SerializeField] private GameObject loginPanel; //Окно авторизации.
-    [SerializeField] private GameObject exitPanel; //Диалоговое окно о выходе из игры.
-    [SerializeField] private GameObject optionsPanel; //Окно настроек.
+
+    [Header("Окно авторизации")]
+    [SerializeField] private GameObject loginPanel;
+    [Header("Окно выхода из игры")]
+    [SerializeField] private GameObject exitPanel;
+    [Header("Окно настроек")]
+    [SerializeField] private GameObject optionsPanel;
     #endregion
 
     private void Start()
@@ -18,9 +22,7 @@ public class MainMenuController : MonoBehaviour
         audio.SetFloat("SoundVolume", PlayerPrefs.GetFloat("SoundVolume"));
 
         if (!PlayerPrefs.HasKey("CurrentPlayerName"))
-        {
             PlayerPrefs.SetString("CurrentPlayerName", "Guest");
-        }
     }
 
     public void Authorization()
@@ -37,8 +39,6 @@ public class MainMenuController : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
             exitPanel.SetActive(true);
-        }
     }
 }

@@ -41,9 +41,7 @@ public class LoginWindow : BaseWindow
         var playerLogins = new List<string>();
 
         for(int i = 0;i < playerLoginsCount; i++)
-        {
             playerLogins.Add(PlayerPrefs.GetString($"Player {i}"));
-        }
 
         return playerLogins;
     }
@@ -69,9 +67,7 @@ public class LoginWindow : BaseWindow
         List<string> playerKeys = new List<string>();
 
         for(int i = 0; i < playerKeysCount; i++)
-        {
             playerKeys.Add($"Player {i}");
-        }
 
         return playerKeys;
     }

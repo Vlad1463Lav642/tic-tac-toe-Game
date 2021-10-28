@@ -8,8 +8,9 @@ public class GameController : MonoBehaviour
     #region Параметры
     [SerializeField] private GameObject pausePanel;
 
-    [SerializeField] private sbyte playerTurn; //Текущий игрок.
-    [SerializeField] private int turnCount; //Счетчик ходов.
+    private sbyte playerTurn; //Текущий игрок.
+    private int turnCount; //Счетчик ходов.
+
     [SerializeField] private GameObject[] turnIcons; //Отметка текущего игрока.
     [SerializeField] private Sprite[] playerIcons; //Х и О.
     [SerializeField] private Image[] tictactoeSpaces; //Клетки поля.
@@ -17,6 +18,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Text[] playerNames; //Имена игроков.
     [SerializeField] private Text[] playerScores; //Количество выигранных каждым из игроков раундов.
 
+    [Header("Количество раундов")]
     [SerializeField] private int rounds = 3; //Количество раундов.
     private List<int> playerScoreCounts; //Счетчик раундов.
 
@@ -53,9 +55,7 @@ public class GameController : MonoBehaviour
         }
 
         for(int k = 0; k < playerScores.Length; k++)
-        {
             playerScoreCounts.Add(Convert.ToInt32(playerScores[k].text));
-        }
     }
 
     private void Start()
@@ -294,11 +294,11 @@ public class GameController : MonoBehaviour
             //Запуск затемнения экрана с соответствующим результатом по очкам.
             if (playerTurn != cpuID)
             {
-                gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f,"+100");
+                gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f,$"+{toScore}");
             }
             else
             {
-                gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f, "-100");
+                gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f, $"-{toScore}");
             }
 
             //Открытие окна победы.
