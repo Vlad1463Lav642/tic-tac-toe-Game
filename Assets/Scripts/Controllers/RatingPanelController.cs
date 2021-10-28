@@ -2,11 +2,17 @@
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Окно рейтинга игроков.
+/// </summary>
 public class RatingPanelController : MonoBehaviour
 {
     #region Параметры
+
+    [Header("Базовые данные")]
     [SerializeField] private float speedPanel = 2f;
     [SerializeField] private Transform arrowImage;
+    [Header("Окно авторизации")]
     [SerializeField] private LoginWindow loginPanel;
 
     private bool isOpen;
@@ -31,11 +37,30 @@ public class RatingPanelController : MonoBehaviour
     public void RatingDataLoad()
     {
         var playerLogins = loginPanel.GetPlayerLogins();
-        var ratingScoreData = new List<string>();
 
-        ratingScoreData = playerLogins.Select(item => $"{item}: {PlayerPrefs.GetFloat(item)}").ToList();
+        var ratingScoreData = playerLogins.Select(item => new RatingItem(item,PlayerPrefs.GetFloat(item))).ToList();
 
-        gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingScoreData);
+        //Сортировка рейтинга по убыванию очков.
+        for(int i = 0; i < ratingScoreData.Count; i++)
+        {
+            for(int j = 0;j < ratingScoreData.Count - 1; j++)
+            {
+                if(ratingScoreData[i].PlayerScore > ratingScoreData[j].PlayerScore)
+                {
+                    var backupItem = new RatingItem(ratingScoreData[i].PlayerName, ratingScoreData[i].PlayerScore);
+
+                    ratingScoreData[i].PlayerName = ratingScoreData[j].PlayerName;
+                    ratingScoreData[i].PlayerScore = ratingScoreData[j].PlayerScore;
+
+                    ratingScoreData[j].PlayerName = backupItem.PlayerName;
+                    ratingScoreData[j].PlayerScore = backupItem.PlayerScore;
+                }
+            }
+        }
+
+        var ratingStrings = ratingScoreData.Select(item => item.WriteDataToString()).ToList();
+
+        gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingStrings);
     }
 
     private void Update()

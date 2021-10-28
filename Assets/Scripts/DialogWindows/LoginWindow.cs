@@ -11,7 +11,10 @@ using System.Linq;
 public class LoginWindow : BaseWindow
 {
     #region Параметры
+
+    [Header("Окно регистрации")]
     [SerializeField] private GameObject registrationPanel;
+
     private UnityAction onPlayerSelected;
     #endregion
 
@@ -32,9 +35,9 @@ public class LoginWindow : BaseWindow
     }
 
     /// <summary>
-    /// Возвращает массив логинов игроков.
+    /// Возвращает список логинов игроков.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Список логинов.</returns>
     public List<string> GetPlayerLogins()
     {
         var playerLoginsCount = PlayerPrefs.GetInt("PlayersCount");
@@ -58,13 +61,13 @@ public class LoginWindow : BaseWindow
     }
 
     /// <summary>
-    /// Возвращает массив ключей по которым можно получить логин из PlayerPrefs.
+    /// Возвращает список ключей по которым можно получить логин из PlayerPrefs.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Список ключей.</returns>
     public List<string> GetPlayerKeys()
     {
         var playerKeysCount = PlayerPrefs.GetInt("PlayersCount");
-        List<string> playerKeys = new List<string>();
+        var playerKeys = new List<string>();
 
         for(int i = 0; i < playerKeysCount; i++)
             playerKeys.Add($"Player {i}");

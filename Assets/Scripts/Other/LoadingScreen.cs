@@ -72,7 +72,8 @@ public class LoadingScreen : MonoBehaviour
     /// <param name="text">Текст загрузки.</param>
     public void SetLoadingText(string text)
     {
-        loadingText.text = text;
+        if(!string.IsNullOrWhiteSpace(text))
+            loadingText.text = text;
     }
 
     /// <summary>
@@ -90,7 +91,8 @@ public class LoadingScreen : MonoBehaviour
     /// <param name="value">Значение полоски</param>
     public void SetLoadingProgress(float value)
     {
-        loadingSlider.value = value;
+        if (value >= 0 && value <= 1)
+            loadingSlider.value = value;
     }
 
     /// <summary>

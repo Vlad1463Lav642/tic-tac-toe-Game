@@ -8,8 +8,12 @@ public class RegistrationWindow : BaseWindow
 {
     #region Параметры
     private int i = 0;
+
+    [Header("Поле ввода логина")]
     [SerializeField] private InputField userNameField;
+    [Header("Окно авторизации")]
     [SerializeField] private LoginWindow loginPanel;
+    [Header("Окно рейтинга игроков")]
     [SerializeField] private RatingPanelController ratingPanel;
     #endregion
 
@@ -19,6 +23,7 @@ public class RegistrationWindow : BaseWindow
 
         loginPanel.LoginDataLoad();
         ratingPanel.RatingDataLoad();
+        userNameField.text = "";
 
         gameObject.SetActive(false);
     }

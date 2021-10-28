@@ -11,12 +11,15 @@ public class GameController : MonoBehaviour
     private sbyte playerTurn; //Текущий игрок.
     private int turnCount; //Счетчик ходов.
 
+    [Header("Базовые данные")]
     [SerializeField] private GameObject[] turnIcons; //Отметка текущего игрока.
     [SerializeField] private Sprite[] playerIcons; //Х и О.
     [SerializeField] private Image[] tictactoeSpaces; //Клетки поля.
 
-    [SerializeField] private Text[] playerNames; //Имена игроков.
-    [SerializeField] private Text[] playerScores; //Количество выигранных каждым из игроков раундов.
+    [Header("Имена игроков")]
+    [SerializeField] private Text[] playerNames;
+    [Header("Счетчики выигранных раундов")]
+    [SerializeField] private Text[] playerScores;
 
     [Header("Количество раундов")]
     [SerializeField] private int rounds = 3; //Количество раундов.
@@ -29,7 +32,8 @@ public class GameController : MonoBehaviour
     [Header("Количество очков за победу/поражение")]
     [SerializeField] private int toScore = 100;
 
-    [SerializeField] private WinWindow winPanel; //Окно победы.
+    [Header("Окно победы")]
+    [SerializeField] private WinWindow winPanel;
 
 
     private List<sbyte> markedSpaces; //Список ID клеток поля.
@@ -169,13 +173,13 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// Алгоритм МинМакс.
     /// </summary>
-    /// <param name="depth">ID хода по дереву.</param>
+    /// <param name="depth">ID хода.</param>
     /// <param name="isAiTurn">Если ходит компьютер.</param>
     /// <returns>Наиболее приемлемый ход.</returns>
     private int MinMaxCPU(int depth, bool isAiTurn)
     {
         int score;
-        var bestScore = -100;
+        var bestScore = -1000;
 
         if (IsDraw())
             return 0;
@@ -232,7 +236,7 @@ public class GameController : MonoBehaviour
         var victory = false;
 
         //Массив всех решений.
-        sbyte[,] allSolutions = new sbyte[8, 3]
+        var allSolutions = new sbyte[8, 3]
         {
             { markedSpaces[0], markedSpaces[1], markedSpaces[2] },
             { markedSpaces[3], markedSpaces[4], markedSpaces[5] },

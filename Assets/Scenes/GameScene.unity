@@ -575,8 +575,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 2046341044406282946}
-  playerTurn: 0
-  turnCount: 0
   turnIcons:
   - {fileID: 1150986072}
   - {fileID: 995904497}
@@ -600,6 +598,7 @@ MonoBehaviour:
   - {fileID: 598356977}
   - {fileID: 1942173584}
   rounds: 3
+  toScore: 100
   winPanel: {fileID: 1212644202}
 --- !u!114 &538915923
 MonoBehaviour:
