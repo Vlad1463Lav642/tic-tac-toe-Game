@@ -8,26 +8,35 @@ public class GameController : MonoBehaviour
     #region Параметры
     [SerializeField] private GameObject pausePanel;
 
-    [SerializeField] private int playerTurn; //Текущий игрок.
-    [SerializeField] private int turnCount; //Счетчик ходов.
+    private sbyte playerTurn; //Текущий игрок.
+    private int turnCount; //Счетчик ходов.
+
+    [Header("Базовые данные")]
     [SerializeField] private GameObject[] turnIcons; //Отметка текущего игрока.
     [SerializeField] private Sprite[] playerIcons; //Х и О.
     [SerializeField] private Image[] tictactoeSpaces; //Клетки поля.
 
-    [SerializeField] private Text[] playerNames; //Имена игроков.
-    [SerializeField] private Text[] playerScores; //Количество выигранных каждым из игроков раундов.
+    [Header("Имена игроков")]
+    [SerializeField] private Text[] playerNames;
+    [Header("Счетчики выигранных раундов")]
+    [SerializeField] private Text[] playerScores;
 
+    [Header("Количество раундов")]
     [SerializeField] private int rounds = 3; //Количество раундов.
     private List<int> playerScoreCounts; //Счетчик раундов.
 
-    private int emptyID = -1; //ID пустой клетки.
-    private int cpuID; //ID компьютера.
-    private int playerID; //ID игрока.
+    private sbyte emptyID = -1; //ID пустой клетки.
+    private sbyte cpuID; //ID компьютера.
+    private sbyte playerID; //ID игрока.
 
-    [SerializeField] private WinWindow winPanel; //Окно победы.
+    [Header("Количество очков за победу/поражение")]
+    [SerializeField] private int toScore = 100;
+
+    [Header("Окно победы")]
+    [SerializeField] private WinWindow winPanel;
 
 
-    private List<int> markedSpaces; //Массив ID клеток поля.
+    private List<sbyte> markedSpaces; //Список ID клеток поля.
     #endregion
 
     /// <summary>
@@ -36,7 +45,7 @@ public class GameController : MonoBehaviour
     private void InitializeGame()
     {
         turnCount = 0;
-        markedSpaces = new List<int>();
+        markedSpaces = new List<sbyte>();
         playerScoreCounts = new List<int>();
 
 
@@ -50,9 +59,7 @@ public class GameController : MonoBehaviour
         }
 
         for(int k = 0; k < playerScores.Length; k++)
-        {
             playerScoreCounts.Add(Convert.ToInt32(playerScores[k].text));
-        }
     }
 
     private void Start()
@@ -110,12 +117,8 @@ public class GameController : MonoBehaviour
 
         //Если совершено более четырех ходов.
         if(turnCount > 4)
-        {
             if (Win(playerTurn))
-            {
                 WinnerWindow();
-            }
-        }
 
         NextTurn();
     }
@@ -144,11 +147,11 @@ public class GameController : MonoBehaviour
     /// </summary>
     private void CPUControl()
     {
-        int bestScore = -100;
-        int movePosition = emptyID;
+        var bestScore = -100;
+        var movePosition = emptyID;
         int score;
 
-        for(int i = 0; i < markedSpaces.Count; i++)
+        for(sbyte i = 0; i < markedSpaces.Count; i++)
         {
             if(markedSpaces[i] == emptyID)
             {
@@ -164,46 +167,34 @@ public class GameController : MonoBehaviour
             }
         }
         if (movePosition > emptyID)
-        {
             TicTacToeButton(movePosition);
-        }
-        else
-        {
-            Debug.Log(movePosition);
-        }
     }
 
     /// <summary>
     /// Алгоритм МинМакс.
     /// </summary>
-    /// <param name="depth">ID хода по дереву.</param>
+    /// <param name="depth">ID хода.</param>
     /// <param name="isAiTurn">Если ходит компьютер.</param>
     /// <returns>Наиболее приемлемый ход.</returns>
     private int MinMaxCPU(int depth, bool isAiTurn)
     {
         int score;
-        int bestScore = -100;
+        var bestScore = -1000;
 
         if (IsDraw())
-        {
             return 0;
-        }
 
         if (Win(cpuID))
-        {
             return 100;
-        }
 
-        if(Win(playerID))
-        {
+        if (Win(playerID))
             return -100;
-        }
 
         if (isAiTurn)
         {
             bestScore = -100;
 
-            for (int i = 0; i < markedSpaces.Count; i++)
+            for (sbyte i = 0; i < markedSpaces.Count; i++)
             {
                 if (markedSpaces[i] == emptyID)
                 {
@@ -220,7 +211,7 @@ public class GameController : MonoBehaviour
         {
             bestScore = 100;
 
-            for (int i = 0; i < markedSpaces.Count; i++)
+            for (sbyte i = 0; i < markedSpaces.Count; i++)
             {
                 if (markedSpaces[i] == emptyID)
                 {
@@ -242,10 +233,10 @@ public class GameController : MonoBehaviour
     /// <returns>Значение была победа или нет.</returns>
     private bool Win(int id)
     {
-        bool victory = false;
+        var victory = false;
 
         //Массив всех решений.
-        int[,] allSolutions = new int[8, 3]
+        var allSolutions = new sbyte[8, 3]
         {
             { markedSpaces[0], markedSpaces[1], markedSpaces[2] },
             { markedSpaces[3], markedSpaces[4], markedSpaces[5] },
@@ -257,7 +248,7 @@ public class GameController : MonoBehaviour
             { markedSpaces[2], markedSpaces[4], markedSpaces[6] }
         };
 
-        for(int i = 0; i < 8; i++)
+        for(byte i = 0; i < 8; i++)
         {
             if (IsDraw())
             {
@@ -268,9 +259,7 @@ public class GameController : MonoBehaviour
                 }
             }
             else
-            {
                 InitializeGame();
-            }
         }
 
         return victory;
@@ -282,7 +271,7 @@ public class GameController : MonoBehaviour
     /// </summary>
     private void WinnerWindow()
     {
-        float scoreCount = ++playerScoreCounts[playerTurn];
+        var scoreCount = ++playerScoreCounts[playerTurn];
 
         //Если у игрока выигравшего раунд количество побед меньше необходимого:
         if (playerScoreCounts[playerTurn] < rounds)
@@ -294,32 +283,26 @@ public class GameController : MonoBehaviour
         else
         {
             //Получение старого рейтинга игрока.
-            float winPlayer = PlayerPrefs.GetFloat(playerNames[playerID].text);
+            var winPlayer = PlayerPrefs.GetFloat(playerNames[playerID].text);
 
             if (playerTurn != cpuID)
             {
                 if (PlayerPrefs.HasKey(playerNames[playerID].text))
-                {
                     //Добавление 100 очков к рейтингу.
-                    PlayerPrefs.SetFloat(playerNames[playerID].text, 100 + winPlayer);
-                }
+                    PlayerPrefs.SetFloat(playerNames[playerID].text, toScore + winPlayer);
             }
-            else
-            {
-                if (PlayerPrefs.HasKey(playerNames[playerID].text))
-                {
-                    //Удаление 100 очков из рейтинга.
-                    PlayerPrefs.SetFloat(playerNames[playerID].text, -100 + winPlayer);
-                }
-            }
+            else if (PlayerPrefs.HasKey(playerNames[playerID].text))
+                //Удаление 100 очков из рейтинга.
+                PlayerPrefs.SetFloat(playerNames[playerID].text, -toScore + winPlayer);
 
             //Запуск затемнения экрана с соответствующим результатом по очкам.
-            if (playerTurn != cpuID) {
-                gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f,"+100");
+            if (playerTurn != cpuID)
+            {
+                gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f,$"+{toScore}");
             }
             else
             {
-                gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f, "-100");
+                gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f, $"-{toScore}");
             }
 
             //Открытие окна победы.
@@ -334,14 +317,12 @@ public class GameController : MonoBehaviour
     /// <returns>Значение True/False</returns>
     private bool IsDraw()
     {
-        bool isDraw = false;
+        var isDraw = false;
 
-        for(int i = 0; i<markedSpaces.Count; i++)
+        for(sbyte i = 0; i<markedSpaces.Count; i++)
         {
             if(markedSpaces[i] == emptyID)
-            {
                 isDraw = true;
-            }
         }
 
         return isDraw;
@@ -350,8 +331,6 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         if(playerTurn == cpuID)
-        {
             CPUControl();
-        }
     }
 }

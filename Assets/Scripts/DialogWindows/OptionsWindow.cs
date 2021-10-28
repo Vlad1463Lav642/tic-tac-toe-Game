@@ -15,9 +15,7 @@ public class OptionsWindow : BaseWindow
     private void Start()
     {
         if (PlayerPrefs.HasKey("SoundVolume"))
-        {
             audioSlider.value = PlayerPrefs.GetFloat("SoundVolume");
-        }
     }
 
     /// <summary>

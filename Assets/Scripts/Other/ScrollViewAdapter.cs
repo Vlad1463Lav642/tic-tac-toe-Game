@@ -23,7 +23,7 @@ public class ScrollViewAdapter : MonoBehaviour
     /// <summary>
     /// Добавляет полученные значения в список.
     /// </summary>
-    /// <param name="userNames">Массив значений.</param>
+    /// <param name="userNames">Список значений.</param>
     public void AddItems(List<string> userNames)
     {
         ClearItems();

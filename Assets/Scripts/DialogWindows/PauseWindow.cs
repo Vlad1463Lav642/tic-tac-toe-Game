@@ -6,7 +6,10 @@
 public class PauseWindow : BaseWindow
 {
     #region Параметры
+
+    [Header("Окно настроек")]
     [SerializeField] private GameObject optionsPanel;
+    [Header("Окно подтверждения")]
     [SerializeField] private GameObject confirmPanel;
     #endregion
 

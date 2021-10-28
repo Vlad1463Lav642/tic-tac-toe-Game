@@ -11,7 +11,10 @@ using System.Linq;
 public class LoginWindow : BaseWindow
 {
     #region Параметры
+
+    [Header("Окно регистрации")]
     [SerializeField] private GameObject registrationPanel;
+
     private UnityAction onPlayerSelected;
     #endregion
 
@@ -25,25 +28,23 @@ public class LoginWindow : BaseWindow
     /// </summary>
     public void LoginDataLoad()
     {
-        List<string> playerLogins = GetPlayerLogins();
+        var playerLogins = GetPlayerLogins();
         gameObject.GetComponent<ScrollViewAdapter>().AddItems(playerLogins);
         onPlayerSelected = LoginPlayer;
         ButtonsInit();
     }
 
     /// <summary>
-    /// Возвращает массив логинов игроков.
+    /// Возвращает список логинов игроков.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Список логинов.</returns>
     public List<string> GetPlayerLogins()
     {
-        int playerLoginsCount = PlayerPrefs.GetInt("PlayersCount");
-        List<string> playerLogins = new List<string>();
+        var playerLoginsCount = PlayerPrefs.GetInt("PlayersCount");
+        var playerLogins = new List<string>();
 
         for(int i = 0;i < playerLoginsCount; i++)
-        {
             playerLogins.Add(PlayerPrefs.GetString($"Player {i}"));
-        }
 
         return playerLogins;
     }
@@ -53,25 +54,23 @@ public class LoginWindow : BaseWindow
     /// </summary>
     private void ButtonsInit()
     {
-        List<GameObject> itemsList = gameObject.GetComponent<ScrollViewAdapter>().GetItems();
+        var itemsList = gameObject.GetComponent<ScrollViewAdapter>().GetItems();
 
         itemsList.Select(item => { item.GetComponent<Button>().onClick.AddListener(onPlayerSelected); return item; }).Count();
 
     }
 
     /// <summary>
-    /// Возвращает массив ключей по которым можно получить логин из PlayerPrefs.
+    /// Возвращает список ключей по которым можно получить логин из PlayerPrefs.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Список ключей.</returns>
     public List<string> GetPlayerKeys()
     {
-        int playerKeysCount = PlayerPrefs.GetInt("PlayersCount");
-        List<string> playerKeys = new List<string>();
+        var playerKeysCount = PlayerPrefs.GetInt("PlayersCount");
+        var playerKeys = new List<string>();
 
         for(int i = 0; i < playerKeysCount; i++)
-        {
             playerKeys.Add($"Player {i}");
-        }
 
         return playerKeys;
     }

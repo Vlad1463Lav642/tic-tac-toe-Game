@@ -2,11 +2,17 @@
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Окно рейтинга игроков.
+/// </summary>
 public class RatingPanelController : MonoBehaviour
 {
     #region Параметры
+
+    [Header("Базовые данные")]
     [SerializeField] private float speedPanel = 2f;
     [SerializeField] private Transform arrowImage;
+    [Header("Окно авторизации")]
     [SerializeField] private LoginWindow loginPanel;
 
     private bool isOpen;
@@ -30,12 +36,31 @@ public class RatingPanelController : MonoBehaviour
     /// </summary>
     public void RatingDataLoad()
     {
-        List<string> playerLogins = loginPanel.GetPlayerLogins();
-        List<string> ratingScoreData = new List<string>();
+        var playerLogins = loginPanel.GetPlayerLogins();
 
-        ratingScoreData = playerLogins.Select(item => $"{item}: {PlayerPrefs.GetFloat(item)}").ToList();
+        var ratingScoreData = playerLogins.Select(item => new RatingItem(item,PlayerPrefs.GetFloat(item))).ToList();
 
-        gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingScoreData);
+        //Сортировка рейтинга по убыванию очков.
+        for(int i = 0; i < ratingScoreData.Count; i++)
+        {
+            for(int j = 0;j < ratingScoreData.Count - 1; j++)
+            {
+                if(ratingScoreData[i].PlayerScore > ratingScoreData[j].PlayerScore)
+                {
+                    var backupItem = new RatingItem(ratingScoreData[i].PlayerName, ratingScoreData[i].PlayerScore);
+
+                    ratingScoreData[i].PlayerName = ratingScoreData[j].PlayerName;
+                    ratingScoreData[i].PlayerScore = ratingScoreData[j].PlayerScore;
+
+                    ratingScoreData[j].PlayerName = backupItem.PlayerName;
+                    ratingScoreData[j].PlayerScore = backupItem.PlayerScore;
+                }
+            }
+        }
+
+        var ratingStrings = ratingScoreData.Select(item => item.WriteDataToString()).ToList();
+
+        gameObject.GetComponent<ScrollViewAdapter>().AddItems(ratingStrings);
     }
 
     private void Update()
@@ -44,17 +69,11 @@ public class RatingPanelController : MonoBehaviour
         if (!isOpen)
         {
             if (panelPosition.x <= closePosition.x)
-            {
                 panelPosition = Vector3.Lerp(panelPosition, closePosition, Time.deltaTime * speedPanel);
-            }
         }
-        else
-        {
-            if (panelPosition.x >= openPosition.x)
-            {
-                panelPosition = Vector3.Lerp(panelPosition, openPosition, Time.deltaTime * speedPanel);
-            }
-        }
+        else if (panelPosition.x >= openPosition.x)
+            panelPosition = Vector3.Lerp(panelPosition, openPosition, Time.deltaTime * speedPanel);
+
         transform.position = panelPosition;
     }
 
@@ -66,12 +85,8 @@ public class RatingPanelController : MonoBehaviour
         isOpen = !isOpen;
 
         if (isOpen)
-        {
             arrowImage.rotation = new Quaternion(arrowImage.rotation.x, arrowImage.rotation.y, 0f, arrowImage.rotation.w);
-        }
         else
-        {
             arrowImage.rotation = new Quaternion(arrowImage.rotation.x, arrowImage.rotation.y, -180f, arrowImage.rotation.w);
-        }
     }
 }
