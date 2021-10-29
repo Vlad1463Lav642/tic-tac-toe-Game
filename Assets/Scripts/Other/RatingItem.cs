@@ -1,16 +1,26 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Элемент игрока в позиции рекордов.
+/// </summary>
 public class RatingItem : MonoBehaviour
 {
+    #region Параметры
     private string playerName;
     private float playerScore;
+    #endregion
 
+    #region Конструктор
     public RatingItem(string name, float score)
     {
         PlayerName = name;
         PlayerScore = score;
     }
+    #endregion
 
+    /// <summary>
+    /// Имя игрока.
+    /// </summary>
     public string PlayerName
     {
         get
@@ -26,6 +36,9 @@ public class RatingItem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Количество очков у игрока.
+    /// </summary>
     public float PlayerScore
     {
         get

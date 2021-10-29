@@ -16,6 +16,7 @@ public class LoginWindow : BaseWindow
     [SerializeField] private GameObject registrationPanel;
 
     private UnityAction onPlayerSelected;
+
     #endregion
 
     private void Start()
@@ -31,6 +32,7 @@ public class LoginWindow : BaseWindow
         var playerLogins = GetPlayerLogins();
         gameObject.GetComponent<ScrollViewAdapter>().AddItems(playerLogins);
         onPlayerSelected = LoginPlayer;
+
         ButtonsInit();
     }
 
@@ -80,7 +82,11 @@ public class LoginWindow : BaseWindow
     /// </summary>
     private void LoginPlayer()
     {
-        PlayerPrefs.SetString("CurrentPlayerName", EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text);
+        var currentPlayer = EventSystem.current.currentSelectedGameObject;
+
+        PlayerPrefs.SetString("CurrentPlayerName", currentPlayer.GetComponentInChildren<Text>().text);
+
+        gameObject.GetComponent<ScrollViewAdapter>().SelectCurrentPlayerIntoList(currentPlayer);
     }
 
     public override void ConfirmButton()

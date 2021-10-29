@@ -38,25 +38,8 @@ public class RatingPanelController : MonoBehaviour
     {
         var playerLogins = loginPanel.GetPlayerLogins();
 
-        var ratingScoreData = playerLogins.Select(item => new RatingItem(item,PlayerPrefs.GetFloat(item))).ToList();
-
         //Сортировка рейтинга по убыванию очков.
-        for(int i = 0; i < ratingScoreData.Count; i++)
-        {
-            for(int j = 0;j < ratingScoreData.Count - 1; j++)
-            {
-                if(ratingScoreData[i].PlayerScore > ratingScoreData[j].PlayerScore)
-                {
-                    var backupItem = new RatingItem(ratingScoreData[i].PlayerName, ratingScoreData[i].PlayerScore);
-
-                    ratingScoreData[i].PlayerName = ratingScoreData[j].PlayerName;
-                    ratingScoreData[i].PlayerScore = ratingScoreData[j].PlayerScore;
-
-                    ratingScoreData[j].PlayerName = backupItem.PlayerName;
-                    ratingScoreData[j].PlayerScore = backupItem.PlayerScore;
-                }
-            }
-        }
+        var ratingScoreData = playerLogins.Select(item => new RatingItem(item,PlayerPrefs.GetFloat(item))).OrderByDescending(item => item.PlayerScore).ToList();
 
         var ratingStrings = ratingScoreData.Select(item => item.WriteDataToString()).ToList();
 
