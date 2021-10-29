@@ -616,6 +616,8 @@ MonoBehaviour:
   scrollContent: {fileID: 1282790053}
   scrollItem: {fileID: 6364678676916572817, guid: 937134d9b41804e278a6b844f1e07d3c,
     type: 3}
+  selectedPlayerSprite: {fileID: 21300000, guid: 52351609d8e630847acd8fd9a9c40c89,
+    type: 3}
 --- !u!1 &392070584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2980,6 +2982,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5793519155481409762, guid: d656f525b1c32472eac3317cc5fe9900,
+        type: 3}
+      propertyPath: selectedPlayerSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 52351609d8e630847acd8fd9a9c40c89,
+        type: 3}
     - target: {fileID: 6940481184338226307, guid: d656f525b1c32472eac3317cc5fe9900,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3005,6 +3013,12 @@ PrefabInstance:
       propertyPath: registrationPanel
       value: 
       objectReference: {fileID: 785363910}
+    - target: {fileID: 7918452111877498349, guid: d656f525b1c32472eac3317cc5fe9900,
+        type: 3}
+      propertyPath: selectedPlayerSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 52351609d8e630847acd8fd9a9c40c89,
+        type: 3}
     - target: {fileID: 7918452111877498351, guid: d656f525b1c32472eac3317cc5fe9900,
         type: 3}
       propertyPath: m_LocalPosition.x
