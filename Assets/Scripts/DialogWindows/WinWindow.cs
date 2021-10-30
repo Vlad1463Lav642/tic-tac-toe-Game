@@ -10,8 +10,5 @@ public class WinWindow : BaseWindow
     [SerializeField] private GameObject confirmPanel;
     #endregion
 
-    public override void ConfirmButton()
-    {
-        confirmPanel.SetActive(true);
-    }
+    public override void ConfirmButton() => confirmPanel.SetActive(true);
 }

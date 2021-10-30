@@ -25,16 +25,10 @@ public class MainMenuController : MonoBehaviour
             PlayerPrefs.SetString("CurrentPlayerName", "Guest");
     }
 
-    public void Authorization()
-    {
-        loginPanel.SetActive(true);
-    }
+    public void Authorization() => loginPanel.SetActive(true);
 
 
-    public void Settings()
-    {
-        optionsPanel.SetActive(true);
-    }
+    public void Settings() => optionsPanel.SetActive(true);
 
     private void Update()
     {

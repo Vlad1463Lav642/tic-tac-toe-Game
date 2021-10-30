@@ -287,11 +287,11 @@ public class GameController : MonoBehaviour
             if (currentPlayerTurn != cpuID)
             {
                 if (PlayerPrefs.HasKey(playerNames[playerID].text))
-                    //Добавление 100 очков к рейтингу.
+                    //Добавление очков к рейтингу.
                     PlayerPrefs.SetFloat(playerNames[playerID].text, toScore + winPlayer);
             }
             else if (PlayerPrefs.HasKey(playerNames[playerID].text))
-                //Удаление 100 очков из рейтинга.
+                //Удаление очков из рейтинга.
                 PlayerPrefs.SetFloat(playerNames[playerID].text, -toScore + winPlayer);
 
             //Запуск затемнения экрана с соответствующим результатом по очкам.
@@ -329,7 +329,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if(currentPlayerTurn == cpuID)
+        if (currentPlayerTurn == cpuID)
             CPUControl();
     }
 }

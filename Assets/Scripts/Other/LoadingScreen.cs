@@ -31,7 +31,7 @@ public class LoadingScreen : MonoBehaviour
     /// </summary>
     /// <param name="index">ID сцены.</param>
     /// <returns></returns>
-    IEnumerator AsyncLoadSimulation(int index)
+    private IEnumerator AsyncLoadSimulation(int index)
     {
         loadingScreen.SetActive(true);
         yield return new WaitForSeconds(waiting);
@@ -52,7 +52,7 @@ public class LoadingScreen : MonoBehaviour
     /// </summary>
     /// <param name="index">ID сцены.</param>
     /// <returns></returns>
-    IEnumerator AsyncLoad(int index)
+    private IEnumerator AsyncLoad(int index)
     {
         loadingScreen.SetActive(true);
         AsyncOperation operation = SceneManager.LoadSceneAsync(index);
@@ -80,10 +80,7 @@ public class LoadingScreen : MonoBehaviour
     /// Возвращает текст с экрана загрузки.
     /// </summary>
     /// <returns>Текст загрузки.</returns>
-    public string GetLoadingText()
-    {
-        return loadingText.text;
-    }
+    public string GetLoadingText() => loadingText.text;
 
     /// <summary>
     /// Устанавливает значение полоски загрузки.
@@ -99,8 +96,5 @@ public class LoadingScreen : MonoBehaviour
     /// Возвращает значение полоски загрузки.
     /// </summary>
     /// <returns>Значение полоски.</returns>
-    public float GetLoadingProgress()
-    {
-        return loadingSlider.value;
-    }
+    public float GetLoadingProgress() => loadingSlider.value;
 }
