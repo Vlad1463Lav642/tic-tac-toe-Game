@@ -19,10 +19,7 @@ public class LoginWindow : BaseWindow
 
     #endregion
 
-    private void Start()
-    {
-        LoginDataLoad();
-    }
+    private void Start() => LoginDataLoad();
 
     /// <summary>
     /// Передает данные в ScrollViewAdapter для вывода в списке.
@@ -89,18 +86,9 @@ public class LoginWindow : BaseWindow
         gameObject.GetComponent<ScrollViewAdapter>().SelectCurrentPlayerIntoList(currentPlayer);
     }
 
-    public override void ConfirmButton()
-    {
-        gameObject.SetActive(false);
-    }
+    public override void ConfirmButton() => gameObject.SetActive(false);
 
-    public override void CloseButton()
-    {
-        gameObject.SetActive(false);
-    }
+    public override void CloseButton() => gameObject.SetActive(false);
 
-    public void RegistrationButton()
-    {
-        registrationPanel.SetActive(true);
-    }
+    public void RegistrationButton() => registrationPanel.SetActive(true);
 }

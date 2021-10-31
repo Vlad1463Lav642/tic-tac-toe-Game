@@ -11,18 +11,9 @@ public class SoundForButtons : MonoBehaviour
     [SerializeField] private AudioClip audioPress;
     #endregion
 
-    private void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
+    private void Start() => audioSource = GetComponent<AudioSource>();
 
-    public void HoverSound()
-    {
-        audioSource.PlayOneShot(audioHover);
-    }
+    public void HoverSound() => audioSource.PlayOneShot(audioHover);
 
-    public void PressSound()
-    {
-        audioSource.PlayOneShot(audioPress);
-    }
+    public void PressSound() => audioSource.PlayOneShot(audioPress);
 }

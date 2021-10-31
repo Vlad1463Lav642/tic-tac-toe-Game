@@ -28,8 +28,5 @@ public class OptionsWindow : BaseWindow
         PlayerPrefs.SetFloat("SoundVolume", volume);
     }
 
-    public override void ConfirmButton()
-    {
-        gameObject.SetActive(false);
-    }
+    public override void ConfirmButton() => gameObject.SetActive(false);
 }

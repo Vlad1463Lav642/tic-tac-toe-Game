@@ -10,7 +10,7 @@ public class FaderBlackout : MonoBehaviour
     #region Параметры
     [SerializeField] private GameObject fader;
     [SerializeField] private Text faderText;
-    [SerializeField] [Range(0f, 1f)] float lerpTime;
+    [SerializeField] [Range(0f, 1f)] private float lerpTime;
     #endregion
 
     public void FaderStart(float speed, float step, string score)
@@ -19,12 +19,12 @@ public class FaderBlackout : MonoBehaviour
         StartCoroutine(FaderDark(speed, score));
     }
 
-    IEnumerator FaderDark(float speed, string score)
+    private IEnumerator FaderDark(float speed, string score)
     {
         var color = fader.GetComponentInChildren<Image>().color;
         faderText.gameObject.SetActive(true);
 
-        for (float f = 0f; f < 1f; f += speed * Time.deltaTime)
+        for (var f = 0f; f < 1f; f += speed * Time.deltaTime)
         {
             color = Color.Lerp(color, Color.black, f);
             fader.GetComponentInChildren<Image>().color = color;

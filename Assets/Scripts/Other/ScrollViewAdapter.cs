@@ -72,10 +72,7 @@ public class ScrollViewAdapter : MonoBehaviour
     /// Возвращает список значений.
     /// </summary>
     /// <returns>Список значений.</returns>
-    public List<GameObject> GetItems()
-    {
-        return itemsList;
-    }
+    public List<GameObject> GetItems() => itemsList;
 
     /// <summary>
     /// Очищает список.

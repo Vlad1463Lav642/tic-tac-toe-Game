@@ -3,5 +3,5 @@
     /// <summary>
     /// Диалоговое окно подтверждения.
     /// </summary>
-    public override void ConfirmButton() {}
+    public override void ConfirmButton() { }
 }

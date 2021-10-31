@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     #region Параметры
     [SerializeField] private GameObject pausePanel;
 
-    private sbyte playerTurn; //Текущий игрок.
+    private sbyte currentPlayerTurn; //Текущий игрок.
     private int turnCount; //Счетчик ходов.
 
     [Header("Базовые данные")]
@@ -87,13 +87,13 @@ public class GameController : MonoBehaviour
         {
             turnIcons[0].SetActive(true);
             turnIcons[1].SetActive(false);
-            playerTurn = 0;
+            currentPlayerTurn = 0;
         }
         else
         {
             turnIcons[0].SetActive(false);
             turnIcons[1].SetActive(true);
-            playerTurn = 1;
+            currentPlayerTurn = 1;
         }
     }
 
@@ -108,16 +108,16 @@ public class GameController : MonoBehaviour
     /// <param name="number">ID клетки.</param>
     public void TicTacToeButton(int number)
     {
-        tictactoeSpaces[number].GetComponent<Image>().sprite = playerIcons[playerTurn];
+        tictactoeSpaces[number].GetComponent<Image>().sprite = playerIcons[currentPlayerTurn];
         tictactoeSpaces[number].GetComponent<Image>().color = new Color(0,0,0,255);
         tictactoeSpaces[number].GetComponentInParent<Button>().interactable = false;
 
-        markedSpaces[number] = playerTurn;
+        markedSpaces[number] = currentPlayerTurn;
         turnCount++;
 
         //Если совершено более четырех ходов.
         if(turnCount > 4)
-            if (Win(playerTurn))
+            if (Win(currentPlayerTurn))
                 WinnerWindow();
 
         NextTurn();
@@ -128,15 +128,15 @@ public class GameController : MonoBehaviour
     /// </summary>
     private void NextTurn()
     {
-        if (playerTurn == 0)
+        if (currentPlayerTurn == 0)
         {
-            playerTurn = 1;
+            currentPlayerTurn = 1;
             turnIcons[0].SetActive(false);
             turnIcons[1].SetActive(true);
         }
         else
         {
-            playerTurn = 0;
+            currentPlayerTurn = 0;
             turnIcons[0].SetActive(true);
             turnIcons[1].SetActive(false);
         }
@@ -179,7 +179,6 @@ public class GameController : MonoBehaviour
     private int MinMaxCPU(int depth, bool isAiTurn)
     {
         int score;
-        var bestScore = -1000;
 
         if (IsDraw())
             return 0;
@@ -192,7 +191,7 @@ public class GameController : MonoBehaviour
 
         if (isAiTurn)
         {
-            bestScore = -100;
+            var bestScore = -100;
 
             for (sbyte i = 0; i < markedSpaces.Count; i++)
             {
@@ -209,7 +208,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            bestScore = 100;
+            var bestScore = 100;
 
             for (sbyte i = 0; i < markedSpaces.Count; i++)
             {
@@ -271,13 +270,13 @@ public class GameController : MonoBehaviour
     /// </summary>
     private void WinnerWindow()
     {
-        var scoreCount = ++playerScoreCounts[playerTurn];
+        var scoreCount = ++playerScoreCounts[currentPlayerTurn];
 
         //Если у игрока выигравшего раунд количество побед меньше необходимого:
-        if (playerScoreCounts[playerTurn] < rounds)
+        if (playerScoreCounts[currentPlayerTurn] < rounds)
         {
             //Добавление результата к счету игрока и запуск следующего раунда.
-            playerScores[playerTurn].text = scoreCount.ToString();
+            playerScores[currentPlayerTurn].text = scoreCount.ToString();
             InitializeGame();
         }
         else
@@ -285,18 +284,18 @@ public class GameController : MonoBehaviour
             //Получение старого рейтинга игрока.
             var winPlayer = PlayerPrefs.GetFloat(playerNames[playerID].text);
 
-            if (playerTurn != cpuID)
+            if (currentPlayerTurn != cpuID)
             {
                 if (PlayerPrefs.HasKey(playerNames[playerID].text))
-                    //Добавление 100 очков к рейтингу.
+                    //Добавление очков к рейтингу.
                     PlayerPrefs.SetFloat(playerNames[playerID].text, toScore + winPlayer);
             }
             else if (PlayerPrefs.HasKey(playerNames[playerID].text))
-                //Удаление 100 очков из рейтинга.
+                //Удаление очков из рейтинга.
                 PlayerPrefs.SetFloat(playerNames[playerID].text, -toScore + winPlayer);
 
             //Запуск затемнения экрана с соответствующим результатом по очкам.
-            if (playerTurn != cpuID)
+            if (currentPlayerTurn != cpuID)
             {
                 gameObject.GetComponent<FaderBlackout>().FaderStart(3f, 0.2f,$"+{toScore}");
             }
@@ -307,7 +306,7 @@ public class GameController : MonoBehaviour
 
             //Открытие окна победы.
             winPanel.gameObject.SetActive(true);
-            winPanel.SetLabelText(playerNames[playerTurn].text);
+            winPanel.SetLabelText(playerNames[currentPlayerTurn].text);
         }
     }
 
@@ -330,7 +329,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if(playerTurn == cpuID)
+        if (currentPlayerTurn == cpuID)
             CPUControl();
     }
 }

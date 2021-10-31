@@ -23,10 +23,7 @@ public class RatingItem : MonoBehaviour
     /// </summary>
     public string PlayerName
     {
-        get
-        {
-            return playerName;
-        }
+        get => playerName;
         set
         {
             if (!string.IsNullOrWhiteSpace(value))
@@ -41,22 +38,13 @@ public class RatingItem : MonoBehaviour
     /// </summary>
     public float PlayerScore
     {
-        get
-        {
-            return playerScore;
-        }
-        set
-        {
-            playerScore = value;
-        }
+        get => playerScore;
+        set => playerScore = value;
     }
 
     /// <summary>
     /// Возвращение данных в виде строки.
     /// </summary>
     /// <returns>Строка данных.</returns>
-    public string WriteDataToString()
-    {
-        return $"{PlayerName}: {PlayerScore}";
-    }
+    public string WriteDataToString() => $"{PlayerName}: {PlayerScore}";
 }
